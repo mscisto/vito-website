@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Contact Vito Di Archangel by email or connect on LinkedIn.">
+    <meta name="theme-color" content="#f8f5ed">
+    <title>Contact Me | Vito Di Archangel</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="page-data.js" defer>
+    </script>
+    <script src="script.js" defer>
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header shell">
+      <a class="brand" href="index.html" aria-label="Vito Di Archangel home">
+        <span class="brand-mark" aria-hidden="true">VD</span>
+        <span>
+          Vito Di Archangel
+          <span class="brand-caption">Mechanical engineering</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="index.html#projects">Projects <span aria-hidden="true">↗</span>
+        </a>
+        <a href="index.html#about">About <span aria-hidden="true">↗</span>
+        </a>
+        <a href="contact.html" aria-current="page">Contact Me <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+    <main id="main" class="shell contact-page">
+      <div class="contact-heading">
+        <a class="case-back" href="index.html">← Back to the portfolio</a>
+        <p class="eyebrow">III / Get in touch</p>
+        <h1>Let’s start<br>
+          <em>a conversation.</em>
+        </h1>
+        <p class="contact-lead">For engineering opportunities, project collaborations,<br>or a simple hello.</p>
+      </div>
+      <div class="contact-grid">
+        <section class="contact-card contact-email" aria-labelledby="email-title">
+          <p class="eyebrow">01 / Email</p>
+          <h2 id="email-title">Write to me.</h2>
+          <a class="contact-address" href="mailto:vdiarchangel@gmail.com">vdiarchangel@gmail.com</a>
+          <a class="contact-button" href="mailto:vdiarchangel@gmail.com">Send an email <span aria-hidden="true">↗</span>
+          </a>
+          <p class="contact-note">Opens your email app.</p>
+        </section>
+        <section class="contact-card" aria-labelledby="linkedin-title">
+          <p class="eyebrow">02 / LinkedIn</p>
+          <h2 id="linkedin-title">Let’s connect.</h2>
+          <p>Find me on LinkedIn to connect professionally.</p>
+          <a class="text-link" href="https://www.linkedin.com/in/vdiarchangel" target="_blank" rel="noopener noreferrer">View my LinkedIn <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+      </div>
+      <div class="contact-closing">
+        <span aria-hidden="true">VD</span>
+        <p>Thank you for visiting.</p>
+        <a class="text-link" href="index.html#projects">Explore my projects <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </main>
+    <footer class="shell footer">
+      <a class="footer-name" href="index.html">Vito Di Archangel</a>
+      <p>© <span id="year">2026</span> Vito Di Archangel | Forza Juve</p>
+      <a href="#main">Back to top ↑</a>
+    </footer>
+    <section class="music-dock shell" aria-label="Background music">
+      <audio id="background-music" loop preload="auto" aria-label="Juventus theme song">
+        <source src="assets/background-music.mp3" type="audio/mpeg">
+      </audio>
+      <div class="music-controls">
+        <button id="music-button" class="music-button" type="button" aria-pressed="false" aria-controls="background-music">
+          <span id="music-icon" class="music-icon" aria-hidden="true">♫</span>
+          <span id="music-button-label">Play music</span>
+          <span class="music-track">Juventus theme</span>
+        </button>
+        <label class="music-volume" for="music-volume">
+          Volume
+          <input id="music-volume" type="range" min="0" max="100" value="5" aria-label="Music volume" aria-valuetext="5 percent">
+        </label>
+      </div>
+      <p id="music-status" class="music-status" role="status">Starting music…</p>
+      <details class="music-credit">
+        <summary>Music credits &amp; rights</summary>
+        <p>Background music: Juventus theme song. The music, lyrics and sound recording
+          belong to their respective copyright holders. All rights reserved by their
+          respective owners. No ownership of this music is claimed by this website.
+        </p>
+        <p>This is Vito Di Archangel’s independent personal portfolio. It is not
+          affiliated with, sponsored by or endorsed by Juventus Football Club.
+          The Juventus name and associated trademarks belong to their respective owners.
+        </p>
+      </details>
+    </section>
+  </body>
+</html>
