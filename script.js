@@ -45,133 +45,7 @@ function initialiseTabs(section) {
   }
 }
 
-// Set a quiet initial volume before attempting automatic playback.
-// When sound is blocked, retry inside the visitor’s first click or key press.
-const music = document.getElementById('background-music');
-const musicButton = document.getElementById('music-button');
-const musicButtonLabel = document.getElementById('music-button-label');
-const musicIcon = document.getElementById('music-icon');
-const musicStatus = document.getElementById('music-status');
-const musicVolume = document.getElementById('music-volume');
-let wantsMusic = true;
-let autoplayBlocked = false;
-
-music.volume = 0.05;
-// Enable the native autoplay hint only after lowering the initial volume.
-music.autoplay = true;
-
-function stopAutoplayRetry() {
-  autoplayBlocked = false;
-  document.removeEventListener('click', retryAutoplay);
-  document.removeEventListener('keydown', retryAutoplay);
-}
-
-function retryAutoplay(event) {
-  if (!autoplayBlocked || event.defaultPrevented) {
-    return;
-  }
-
-  // The dedicated control handles its own click and keyboard behaviour.
-  if (musicButton.contains(event.target)) {
-    return;
-  }
-
-  stopAutoplayRetry();
-  startMusic();
-}
-
-function waitForInteraction() {
-  autoplayBlocked = true;
-  document.addEventListener('click', retryAutoplay);
-  document.addEventListener('keydown', retryAutoplay);
-}
-
-function updateMusicButton(isPlaying) {
-  musicButton.setAttribute('aria-pressed', String(isPlaying));
-  musicButtonLabel.textContent = isPlaying ? 'Pause music' : 'Play music';
-  musicIcon.textContent = isPlaying ? 'Ⅱ' : '♫';
-}
-
-async function startMusic() {
-  wantsMusic = true;
-  musicStatus.textContent = 'Starting music…';
-
-  try {
-    await music.play();
-    stopAutoplayRetry();
-
-    // Honour a pause clicked while the file was still loading.
-    if (!wantsMusic) {
-      music.pause();
-    }
-  } catch (error) {
-    if (!wantsMusic && error.name === 'AbortError') {
-      updateMusicButton(false);
-      musicStatus.textContent = 'Music paused.';
-      return;
-    }
-
-    wantsMusic = false;
-    updateMusicButton(false);
-    if (error.name === 'NotAllowedError') {
-      waitForInteraction();
-      musicStatus.textContent = 'Music will start when you interact with the page, or press Play music.';
-    } else {
-      stopAutoplayRetry();
-      musicStatus.textContent = 'Music could not load. Please try again or use the soundtrack download.';
-    }
-  }
-}
-
-musicButton.addEventListener('click', () => {
-  stopAutoplayRetry();
-  if (!music.paused || wantsMusic) {
-    wantsMusic = false;
-    music.pause();
-    updateMusicButton(false);
-    musicStatus.textContent = 'Music paused.';
-  } else {
-    startMusic();
-  }
-});
-
-musicVolume.addEventListener('input', () => {
-  music.volume = Number(musicVolume.value) / 100;
-  musicVolume.setAttribute('aria-valuetext', `${musicVolume.value} percent`);
-});
-
-music.addEventListener('playing', () => {
-  if (!wantsMusic) {
-    music.pause();
-    return;
-  }
-
-  updateMusicButton(true);
-  musicStatus.textContent = 'Background music playing.';
-});
-
-music.addEventListener('pause', () => {
-  updateMusicButton(false);
-  musicStatus.textContent = 'Music paused.';
-});
-
-music.addEventListener('waiting', () => {
-  musicStatus.textContent = wantsMusic ? 'Loading music…' : 'Music paused.';
-});
-
-function showMusicError() {
-  stopAutoplayRetry();
-  wantsMusic = false;
-  updateMusicButton(false);
-  musicStatus.textContent = 'Music could not load. Use the soundtrack download below.';
-}
-
-music.addEventListener('error', showMusicError);
-music.querySelector('source').addEventListener('error', showMusicError);
-
-startMusic();
-
-// Keep the audio element alive while swapping only page content.
+// Replace page content during internal navigation.
 // Standalone HTML links still work when JavaScript is unavailable.
 const pages = window.portfolioPages || {};
 const siteDirectory = new URL('.', location.href);
@@ -299,8 +173,6 @@ document.addEventListener('click', event => {
     return;
   }
 
-  // Preserve the existing first-interaction autoplay fallback on navigational clicks.
-  retryAutoplay(event);
   event.preventDefault();
   if (route.page !== currentPage || route.section !== currentSection) {
     writeRoute(route.page, route.section, true);
